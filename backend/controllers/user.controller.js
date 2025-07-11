@@ -6,7 +6,30 @@ import generateAccessToken from "../utils/generateAccessToken.js";
 // Route for user login
 export const loginUser = async (req, res) => {
   try {
-  } catch (error) {}
+    const { email, password } = req.body;
+    // checking if user exists or not
+    const exists = await User.findOne({ email });
+    if (!exists) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User doesn't exists" });
+    }
+    // checking password
+    const isMatch = await bcrypt.compare(password, exists.password);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid Credential" });
+    }
+
+    const token = generateAccessToken(exists._id);
+    return res
+      .status(200)
+      .json({ success: true, message: "User login successfully", token });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 // Router for user register
@@ -36,6 +59,8 @@ export const registerUser = async (req, res) => {
 
     // Hashing user password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Creating new user
     const newUser = await User.create({
       name,
       email,
