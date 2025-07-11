@@ -5,7 +5,7 @@ import { ShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const { setShowSearch, getCartsCount } = useContext(ShopContext);
+  const { setShowSearch, getCartsCount, navigate } = useContext(ShopContext);
 
   return (
     <div className="flex justify-between items-center py-5 font-medium">
@@ -41,6 +41,7 @@ const Navbar = () => {
         </Link>
         <div className="group relative">
           <img
+            onClick={() => navigate("/login")}
             src={assets.profile_icon}
             className="w-5 cursor-pointer"
             alt=""
