@@ -4,6 +4,9 @@ import cors from "cors";
 import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 
+// routers
+import userRouter from "./routes/user.routes.js";
+
 // App config
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -15,6 +18,8 @@ app.use(express.json());
 app.use(cors());
 
 // api endpoint
+
+app.use("/api/users", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Api working");
