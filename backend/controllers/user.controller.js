@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import generateAccessToken from "../utils/generateAccessToken.js";
 
@@ -80,5 +81,22 @@ export const registerUser = async (req, res) => {
 // Route for admin login
 export const loginAdmin = async (req, res) => {
   try {
-  } catch (error) {}
+    const { email, password } = req.body;
+
+    if (
+      process.env.ADMIN_EMAIL === email &&
+      process.env.ADMIN_PASSWORD === password
+    ) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      return res
+        .status(200)
+        .json({ success: true, message: "Admin logged in", token });
+    }
+    return res
+      .status(401)
+      .json({ sucess: false, message: "Invalid Credentials" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
 };
