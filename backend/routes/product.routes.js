@@ -32,6 +32,6 @@ router.post(
 );
 router.get("/single/:productId", getProduct);
 router.get("/list", listProducts);
-router.delete("/remove", removeProduct);
+router.delete("/remove/:productId", removeProduct);
 
 export default router;

@@ -78,6 +78,9 @@ export const getProduct = async (req, res) => {
 // function for remove a product
 export const removeProduct = async (req, res) => {
   try {
+    const { productId } = req.params;
+    await Product.findByIdAndDelete(productId);
+    return res.status(200).json({ success: true, message: "Product removed" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
