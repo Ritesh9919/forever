@@ -7,9 +7,11 @@ import {
   removeProduct,
 } from "../controllers/product.controller.js";
 import upload from "../middleware/multer.middleware.js";
+import adminAuth from "../middleware/adminAuth.middleware.js";
 
 router.post(
   "/add",
+  adminAuth,
   upload.fields([
     {
       name: "image1",
@@ -32,6 +34,6 @@ router.post(
 );
 router.get("/single/:productId", getProduct);
 router.get("/list", listProducts);
-router.delete("/remove/:productId", removeProduct);
+router.delete("/remove/:productId", adminAuth, removeProduct);
 
 export default router;
