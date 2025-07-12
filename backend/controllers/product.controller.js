@@ -69,6 +69,13 @@ export const listProducts = async (req, res) => {
 // function for get single product info
 export const getProduct = async (req, res) => {
   try {
+    const { productId } = req.params;
+    const product = await Product.findById(productId);
+    return res.status(200).json({
+      success: true,
+      message: "Product fetched successfully",
+      product,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
