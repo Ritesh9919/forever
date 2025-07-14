@@ -1,12 +1,27 @@
+import axios from "axios";
 import { useState } from "react";
+import { backenUrl } from "../App";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const onSubmitHandler = async (event) => {
     try {
-      event.preventDeafault();
-    } catch (error) {}
+      event.preventDefault();
+      const response = await axios.post(`${backenUrl}/api/users/admin`, {
+        email,
+        password,
+      });
+      if (response.data.success) {
+        setToken(response.data.token);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center w-full">
@@ -22,6 +37,8 @@ const Login = () => {
               type="email"
               placeholder="your@email.com"
               required
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
           <div className="mb-3 min-w-72">
@@ -31,6 +48,8 @@ const Login = () => {
               type="password"
               placeholder="Enter your password"
               required
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </div>
           <button
