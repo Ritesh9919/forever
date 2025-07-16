@@ -3,22 +3,38 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/relatedProducts";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const { products, currency, addToCart, backendUrl } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
 
   const fetchProductData = async () => {
-    products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-        return null;
+    try {
+      const response = await axios.get(
+        `${backendUrl}/api/products/single/${productId}`
+      );
+      if (response.data.success) {
+        setProductData(response.data.product);
+        setImage(response.data.product.image[0]);
+      } else {
+        toast.error(response.data.message);
       }
-    });
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+    // products.map((item) => {
+    //   if (item._id === productId) {
+    //     setProductData(item);
+    //     setImage(item.image[0]);
+    //     return null;
+    //   }
+    // });
   };
 
   useEffect(() => {
@@ -66,7 +82,7 @@ const Product = () => {
           <div className="flex flex-col gap-4 my-8">
             <p>Select Size</p>
             <div className="flex gap-2">
-              {productData.sizes.map((item, index) => (
+              {productData.size.map((item, index) => (
                 <button
                   onClick={() => setSize(item)}
                   key={index}
