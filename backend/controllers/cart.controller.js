@@ -33,7 +33,16 @@ export const addToCart = async (req, res) => {
 // get user cart
 export const getUserCart = async (req, res) => {
   try {
-  } catch (error) {}
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+    const cartData = user.cartData;
+    return res
+      .status(200)
+      .json({ success: true, cartData, message: "Cart fetched" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 // update user cart
