@@ -10,7 +10,6 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-    console.log(cartItems);
     const tempData = [];
     for (const items in cartItems) {
       for (const item in cartItems[items]) {
