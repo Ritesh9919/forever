@@ -8,6 +8,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/user.routes.js";
 import productRouter from "./routes/product.routes.js";
 import cartRouter from "./routes/cart.routes.js";
+import orderRouter from "./routes/order.routes.js";
 
 // App config
 const app = express();
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/orders", orderRouter);
 
 app.get("/", (req, res) => {
   res.send("Api working");
