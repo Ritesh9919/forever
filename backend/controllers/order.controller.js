@@ -63,6 +63,11 @@ export const allOrdersAdmin = async (req, res) => {
 // All Order data for frontend
 export const userOrders = async (req, res) => {
   try {
+    const userId = req.user._id;
+    const orders = await Order.find({ userId });
+    return res
+      .status(200)
+      .json({ success: true, orders, message: "User orders fetched" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
