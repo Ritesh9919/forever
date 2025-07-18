@@ -85,18 +85,20 @@ const Login = () => {
         value={password}
       />
       <div className="w-full flex justify-between text-sm mt-[-8px]">
-        <p className="cursor-pointer">Forgot your password?</p>
+        <p className="cursor-pointer hover:text-gray-600">
+          Forgot your password?
+        </p>
         {currentState === "Login" ? (
           <p
             onClick={() => setCurrentState("Sign Up")}
-            className="cursor-pointer"
+            className="cursor-pointer hover:text-gray-600"
           >
             Create account
           </p>
         ) : (
           <p
             onClick={() => setCurrentState("Login")}
-            className="cursor-pointer"
+            className="cursor-pointer hover:text-gray-600"
           >
             Login here
           </p>
