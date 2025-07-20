@@ -54,6 +54,10 @@ export const placeOrderRazorpay = async (req, res) => {
 // All orders data for admin panel
 export const allOrdersAdmin = async (req, res) => {
   try {
+    const orders = await Order.find({});
+    return res
+      .status(200)
+      .json({ success: true, orders, message: "Orders fetched" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
@@ -77,6 +81,9 @@ export const userOrders = async (req, res) => {
 // update order status for admin
 export const updateOrderStatus = async (req, res) => {
   try {
+    const { orderId, status } = req.body;
+    await Order.findByIdAndUpdate(orderId, { $set: { status } });
+    return res.status(200).json({ success: true, message: "Status updated" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
