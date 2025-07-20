@@ -8,6 +8,7 @@ import {
   userOrders,
   allOrdersAdmin,
   verifyStripe,
+  verifyRazorpay,
 } from "../controllers/order.controller.js";
 import userAuth from "../middleware/userAuth.middleware.js";
 import adminAuth from "../middleware/adminAuth.middleware.js";
@@ -26,5 +27,7 @@ router.get("/userOrders", userAuth, userOrders);
 
 // verify stripe
 router.post("/verifyStripe", userAuth, verifyStripe);
+// verify razorpay
+router.post("/verifyRazorpay", userAuth, verifyRazorpay);
 
 export default router;
