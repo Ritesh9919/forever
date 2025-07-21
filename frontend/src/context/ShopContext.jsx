@@ -89,20 +89,17 @@ const ShopContextProvider = (props) => {
   };
 
   const getCartAmount = () => {
-    let totalAmount = 0;
-    for (const items in cartItems) {
-      const { price } = products.find((product) => product._id === items);
-      let productQ = 0;
-      for (const item in cartItems[items]) {
-        try {
-          if (cartItems[items][item] > 0) {
-            productQ += cartItems[items][item];
-          }
-        } catch (error) {}
-      }
-      totalAmount = price * productQ;
+    let totalPrice = 0;
+    for (let items in cartItems) {
+      const product = products.find((item) => item._id === items);
+      if (!product) continue;
+      const price = product.price;
+      // sum quantity of all sizes
+      const quantity = Object.values(cartItems[items]);
+      const totalItems = quantity.reduce((sum, qty) => sum + qty, 0);
+      totalPrice += price * totalItems;
     }
-    return totalAmount;
+    return totalPrice;
   };
 
   const getProductData = async () => {
