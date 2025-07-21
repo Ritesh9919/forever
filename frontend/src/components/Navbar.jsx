@@ -43,6 +43,13 @@ const Navbar = () => {
           <p>CONTACT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
+        <a
+          className="hover:text-gray-600"
+          href="https://forever-admin-six-woad.vercel.app/"
+          target="_blank"
+        >
+          Admin Panel
+        </a>
       </ul>
       <div className="flex items-center gap-6">
         <Link to="/collection">
