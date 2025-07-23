@@ -63,7 +63,7 @@ RAZORPAY_KEY_ID=
 RAZORPAY_KEY_SECRET=
 ```
 
-2. admin
+3. admin
 
 ```bash
 VITE_BACKEND_URL='http://localhost:8000'
